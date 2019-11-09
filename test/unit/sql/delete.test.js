@@ -38,7 +38,8 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
             mssql: 'TRUNCATE TABLE [public].[test_users]',
             mariadb: 'TRUNCATE `public`.`test_users`',
             mysql: 'TRUNCATE `public.test_users`',
-            sqlite: 'DELETE FROM `public.test_users`'
+            sqlite: 'DELETE FROM `public.test_users`',
+            rqlite: 'DELETE FROM `public.test_users`'
           }
         );
       });
@@ -65,7 +66,8 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
             mssql: 'TRUNCATE TABLE [public].[test_users]',
             mariadb: 'TRUNCATE `public`.`test_users`',
             mysql: 'TRUNCATE `public.test_users`',
-            sqlite: 'DELETE FROM `public.test_users`; DELETE FROM `sqlite_sequence` WHERE `name` = \'public.test_users\';'
+            sqlite: 'DELETE FROM `public.test_users`; DELETE FROM `sqlite_sequence` WHERE `name` = \'public.test_users\';',
+            rqlite: 'DELETE FROM `public.test_users`; DELETE FROM `sqlite_sequence` WHERE `name` = \'public.test_users\';'
           }
         );
       });
@@ -91,6 +93,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
             postgres: 'DELETE FROM "public"."test_users" WHERE "name" = \'foo\'',
             mariadb: 'DELETE FROM `public`.`test_users` WHERE `name` = \'foo\'',
             sqlite: "DELETE FROM `public.test_users` WHERE `name` = 'foo'",
+            rqlite: "DELETE FROM `public.test_users` WHERE `name` = 'foo'",
             mssql: "DELETE FROM [public].[test_users] WHERE [name] = N'foo'; SELECT @@ROWCOUNT AS AFFECTEDROWS;"
           }
         );
@@ -116,6 +119,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
             postgres: 'DELETE FROM "public"."test_users" WHERE "id" IN (SELECT "id" FROM "public"."test_users" WHERE "name" = \'foo\'\';DROP TABLE mySchema.myTable;\' LIMIT 10)',
             mariadb: "DELETE FROM `public`.`test_users` WHERE `name` = 'foo\\';DROP TABLE mySchema.myTable;' LIMIT 10",
             sqlite: "DELETE FROM `public.test_users` WHERE rowid IN (SELECT rowid FROM `public.test_users` WHERE `name` = 'foo'';DROP TABLE mySchema.myTable;' LIMIT 10)",
+            rqlite: "DELETE FROM `public.test_users` WHERE rowid IN (SELECT rowid FROM `public.test_users` WHERE `name` = 'foo'';DROP TABLE mySchema.myTable;' LIMIT 10)",
             mssql: "DELETE TOP(10) FROM [public].[test_users] WHERE [name] = N'foo'';DROP TABLE mySchema.myTable;'; SELECT @@ROWCOUNT AS AFFECTEDROWS;",
             default: "DELETE FROM [public.test_users] WHERE `name` = 'foo\\';DROP TABLE mySchema.myTable;' LIMIT 10"
           }
@@ -149,6 +153,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
             postgres: new Error('Cannot LIMIT delete without a model.'),
             mariadb: "DELETE FROM `public`.`test_users` WHERE `name` = 'foo\\';DROP TABLE mySchema.myTable;' LIMIT 10",
             sqlite: "DELETE FROM `public.test_users` WHERE rowid IN (SELECT rowid FROM `public.test_users` WHERE `name` = 'foo'';DROP TABLE mySchema.myTable;' LIMIT 10)",
+            rqlite: "DELETE FROM `public.test_users` WHERE rowid IN (SELECT rowid FROM `public.test_users` WHERE `name` = 'foo'';DROP TABLE mySchema.myTable;' LIMIT 10)",
             mssql: "DELETE TOP(10) FROM [public].[test_users] WHERE [name] = N'foo'';DROP TABLE mySchema.myTable;'; SELECT @@ROWCOUNT AS AFFECTEDROWS;",
             default: "DELETE FROM [public.test_users] WHERE `name` = 'foo\\';DROP TABLE mySchema.myTable;' LIMIT 10"
           }
@@ -184,6 +189,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           ), {
             postgres: 'DELETE FROM "test_user" WHERE "test_user_id" = 100',
             sqlite: 'DELETE FROM `test_user` WHERE `test_user_id` = 100',
+            rqlite: 'DELETE FROM `test_user` WHERE `test_user_id` = 100',
             mssql: 'DELETE FROM [test_user] WHERE [test_user_id] = 100; SELECT @@ROWCOUNT AS AFFECTEDROWS;',
             default: 'DELETE FROM [test_user] WHERE [test_user_id] = 100'
           }

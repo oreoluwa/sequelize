@@ -57,6 +57,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           mariadb: 'UPDATE `Users` SET `username`=$1 WHERE `username` = $2 LIMIT 1',
           mysql: 'UPDATE `Users` SET `username`=$1 WHERE `username` = $2 LIMIT 1',
           sqlite: 'UPDATE `Users` SET `username`=$1 WHERE rowid IN (SELECT rowid FROM `Users` WHERE `username` = $2 LIMIT 1)',
+          rqlite: 'UPDATE `Users` SET `username`=$1 WHERE rowid IN (SELECT rowid FROM `Users` WHERE `username` = $2 LIMIT 1)',
           default: 'UPDATE [Users] SET [username]=$1 WHERE [username] = $2'
         },
         bind: {

@@ -83,6 +83,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(undefined, Sequelize.json({ id: 1 })), {
             postgres: '("id"#>>\'{}\') = \'1\'',
             sqlite: "json_extract(`id`,'$') = '1'",
+            rqlite: "json_extract(`id`,'$') = '1'",
             mariadb: "json_unquote(json_extract(`id`,'$')) = '1'",
             mysql: "json_unquote(json_extract(`id`,'$')) = '1'"
           });
@@ -92,6 +93,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(undefined, Sequelize.json({ profile: { id: 1 } })), {
             postgres: '("profile"#>>\'{id}\') = \'1\'',
             sqlite: "json_extract(`profile`,'$.id') = '1'",
+            rqlite: "json_extract(`profile`,'$.id') = '1'",
             mariadb: "json_unquote(json_extract(`profile`,'$.id')) = '1'",
             mysql: "json_unquote(json_extract(`profile`,'$.\\\"id\\\"')) = '1'"
           });
@@ -101,6 +103,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(undefined, Sequelize.json({ property: { value: 1 }, another: { value: 'string' } })), {
             postgres: '("property"#>>\'{value}\') = \'1\' AND ("another"#>>\'{value}\') = \'string\'',
             sqlite: "json_extract(`property`,'$.value') = '1' AND json_extract(`another`,'$.value') = 'string'",
+            rqlite: "json_extract(`property`,'$.value') = '1' AND json_extract(`another`,'$.value') = 'string'",
             mariadb: "json_unquote(json_extract(`property`,'$.value')) = '1' AND json_unquote(json_extract(`another`,'$.value')) = 'string'",
             mysql: "json_unquote(json_extract(`property`,'$.\\\"value\\\"')) = '1' AND json_unquote(json_extract(`another`,'$.\\\"value\\\"')) = 'string'"
           });
@@ -110,6 +113,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(undefined, Sequelize.json({ property: [[4, 6], [8]] })), {
             postgres: '("property"#>>\'{0,0}\') = \'4\' AND ("property"#>>\'{0,1}\') = \'6\' AND ("property"#>>\'{1,0}\') = \'8\'',
             sqlite: "json_extract(`property`,'$[0][0]') = '4' AND json_extract(`property`,'$[0][1]') = '6' AND json_extract(`property`,'$[1][0]') = '8'",
+            rqlite: "json_extract(`property`,'$[0][0]') = '4' AND json_extract(`property`,'$[0][1]') = '6' AND json_extract(`property`,'$[1][0]') = '8'",
             mariadb: "json_unquote(json_extract(`property`,'$[0][0]')) = '4' AND json_unquote(json_extract(`property`,'$[0][1]')) = '6' AND json_unquote(json_extract(`property`,'$[1][0]')) = '8'",
             mysql: "json_unquote(json_extract(`property`,'$[0][0]')) = '4' AND json_unquote(json_extract(`property`,'$[0][1]')) = '6' AND json_unquote(json_extract(`property`,'$[1][0]')) = '8'"
           });
@@ -119,6 +123,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(Sequelize.json('profile.id'), '1'), {
             postgres: '("profile"#>>\'{id}\') = \'1\'',
             sqlite: "json_extract(`profile`,'$.id') = '1'",
+            rqlite: "json_extract(`profile`,'$.id') = '1'",
             mariadb: "json_unquote(json_extract(`profile`,'$.id')) = '1'",
             mysql: "json_unquote(json_extract(`profile`,'$.\\\"id\\\"')) = '1'"
           });
@@ -128,6 +133,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(Sequelize.json('profile.id.0.1'), '1'), {
             postgres: '("profile"#>>\'{id,0,1}\') = \'1\'',
             sqlite: "json_extract(`profile`,'$.id[0][1]') = '1'",
+            rqlite: "json_extract(`profile`,'$.id[0][1]') = '1'",
             mariadb: "json_unquote(json_extract(`profile`,'$.id[0][1]')) = '1'",
             mysql: "json_unquote(json_extract(`profile`,'$.\\\"id\\\"[0][1]')) = '1'"
           });
@@ -137,6 +143,7 @@ if (current.dialect.supports.JSON) {
           expectsql(sql.whereItemQuery(Sequelize.json('json'), '{}'), {
             postgres: '("json"#>>\'{}\') = \'{}\'',
             sqlite: "json_extract(`json`,'$') = '{}'",
+            rqlite: "json_extract(`json`,'$') = '{}'",
             mariadb: "json_unquote(json_extract(`json`,'$')) = '{}'",
             mysql: "json_unquote(json_extract(`json`,'$')) = '{}'"
           });

@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  sequelize:
+    image: node:13.0.1
+    volumes:
+      - $PWD:/var/app
+    working_dir: /var/app
+    environment:
+      - NODE_PATH:/var/app
+    depends_on:
+      - rqlite
+
+  rqlite:
+    image: rqlite/rqlite
+    command:
+      - rqlited
+      - -http-addr
+      - 0.0.0.0:4001
+      - -raft-addr
+      - 0.0.0.0:4002
+      - -on-disk
+      - /rqlite/file/data
+    volumes:
+      - $PWD/rqlite:/rqlite/file

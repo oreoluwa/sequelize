@@ -67,6 +67,16 @@ module.exports = {
 
   sqlite: {},
 
+  rqlite: {
+    host: env.RQLITE_PORT_4002_TCP_ADDR || env.SEQ_RQLITE_HOST || env.SEQ_HOST || '127.0.0.1',
+    port: env.RQLITE_PORT_4002_TCP_PORT || env.SEQ_RQLITE_PORT || env.SEQ_PORT || 4001,
+    protocol: env.RQLITE_PORT_4002_TCP_PROTO || env.SEQ_RQLITE_PROTO || env.SEQ_PROTO || 'http',
+    pool: {
+      max: env.SEQ_RQLITE_POOL_MAX || env.SEQ_POOL_MAX || 5,
+      idle: env.SEQ_RQLITE_POOL_IDLE || env.SEQ_POOL_IDLE || 3000
+    }
+  },
+
   postgres: {
     database: env.SEQ_PG_DB || env.SEQ_DB || 'sequelize_test',
     username: env.SEQ_PG_USER || env.SEQ_USER || 'postgres',

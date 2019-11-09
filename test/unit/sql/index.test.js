@@ -47,6 +47,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
         concurrently: true
       }), {
         sqlite: 'CREATE INDEX `user_field_c` ON `User` (`fieldC`)',
+        rqlite: 'CREATE INDEX `user_field_c` ON `User` (`fieldC`)',
         mssql: 'CREATE FULLTEXT INDEX [user_field_c] ON [User] ([fieldC])',
         postgres: 'CREATE INDEX CONCURRENTLY "user_field_c" ON "User" ("fieldC")',
         mariadb: 'ALTER TABLE `User` ADD FULLTEXT INDEX `user_field_c` (`fieldC`)',
@@ -60,6 +61,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
         parser: 'foo'
       }), {
         sqlite: 'CREATE UNIQUE INDEX `a_b_uniq` ON `User` (`fieldB`, `fieldA` COLLATE `en_US` DESC)',
+        rqlite: 'CREATE UNIQUE INDEX `a_b_uniq` ON `User` (`fieldB`, `fieldA` COLLATE `en_US` DESC)',
         mssql: 'CREATE UNIQUE INDEX [a_b_uniq] ON [User] ([fieldB], [fieldA] DESC)',
         postgres: 'CREATE UNIQUE INDEX "a_b_uniq" ON "User" USING BTREE ("fieldB", "fieldA" COLLATE "en_US" DESC)',
         mariadb: 'ALTER TABLE `User` ADD UNIQUE INDEX `a_b_uniq` USING BTREE (`fieldB`, `fieldA`(5) DESC) WITH PARSER foo',
@@ -104,6 +106,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           }
         }), {
           sqlite: 'CREATE INDEX `table_type` ON `table` (`type`) WHERE `type` = \'public\'',
+          rqlite: 'CREATE INDEX `table_type` ON `table` (`type`) WHERE `type` = \'public\'',
           postgres: 'CREATE INDEX "table_type" ON "table" ("type") WHERE "type" = \'public\'',
           mssql: 'CREATE INDEX [table_type] ON [table] ([type]) WHERE [type] = N\'public\''
         });
@@ -120,6 +123,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           }
         }), {
           sqlite: 'CREATE INDEX `table_type` ON `table` (`type`) WHERE (`type` = \'group\' OR `type` = \'private\')',
+          rqlite: 'CREATE INDEX `table_type` ON `table` (`type`) WHERE (`type` = \'group\' OR `type` = \'private\')',
           postgres: 'CREATE INDEX "table_type" ON "table" ("type") WHERE ("type" = \'group\' OR "type" = \'private\')',
           mssql: 'CREATE INDEX [table_type] ON [table] ([type]) WHERE ([type] = N\'group\' OR [type] = N\'private\')'
         });
@@ -133,6 +137,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           }
         }), {
           sqlite: 'CREATE INDEX `table_type` ON `table` (`type`) WHERE `type` IS NOT NULL',
+          rqlite: 'CREATE INDEX `table_type` ON `table` (`type`) WHERE `type` IS NOT NULL',
           postgres: 'CREATE INDEX "table_type" ON "table" ("type") WHERE "type" IS NOT NULL',
           mssql: 'CREATE INDEX [table_type] ON [table] ([type]) WHERE [type] IS NOT NULL'
         });

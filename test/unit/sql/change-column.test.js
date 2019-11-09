@@ -6,7 +6,7 @@ const sinon = require('sinon'),
   expectsql = Support.expectsql,
   current = Support.sequelize;
 
-if (current.dialect.name !== 'sqlite') {
+if (!['sqlite', 'rqlite'].includes(current.dialect.name)) {
   describe(Support.getTestDialectTeaser('SQL'), () => {
     describe('changeColumn', () => {
 

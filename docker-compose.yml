@@ -71,3 +71,17 @@ services:
     ports:
       - "8970:1433"
     container_name: mssql
+
+  # RQLITE
+  rqlite:
+    image: rqlite/rqlite:latest
+    command:
+      - rqlited
+      - -http-addr
+      - 0.0.0.0:4001
+      - -raft-addr
+      - 0.0.0.0:4002
+      - /rqlite/file/data
+    ports:
+      - "8971:4001"
+    container_name: rqlite

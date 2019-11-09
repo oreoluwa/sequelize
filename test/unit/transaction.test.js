@@ -41,6 +41,9 @@ describe('Transaction', () => {
       sqlite: [
         'BEGIN DEFERRED TRANSACTION;'
       ],
+      rqlite: [
+        'BEGIN DEFERRED TRANSACTION;'
+      ],
       mssql: [
         'BEGIN TRANSACTION;'
       ]
@@ -62,6 +65,10 @@ describe('Transaction', () => {
         'SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;'
       ],
       sqlite: [
+        'BEGIN DEFERRED TRANSACTION;',
+        'PRAGMA read_uncommitted = ON;'
+      ],
+      rqlite: [
         'BEGIN DEFERRED TRANSACTION;',
         'PRAGMA read_uncommitted = ON;'
       ],

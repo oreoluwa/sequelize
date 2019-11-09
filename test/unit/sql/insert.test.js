@@ -41,7 +41,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
   describe('dates', () => {
     it('formats the date correctly when inserting', () => {
       const timezoneSequelize = Support.createSequelizeInstance({
-        timezone: Support.getTestDialect() === 'sqlite' ? '+00:00' : 'CET'
+        timezone: ['sqlite', 'rqlite'].includes(Support.getTestDialect()) ? '+00:00' : 'CET'
       });
 
       const User = timezoneSequelize.define('user', {
@@ -61,6 +61,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           },
           bind: {
             sqlite: ['2015-01-20 00:00:00.000 +00:00'],
+            rqlite: ['2015-01-20 00:00:00.000 +00:00'],
             mysql: ['2015-01-20 01:00:00'],
             mariadb: ['2015-01-20 01:00:00.000'],
             default: ['2015-01-20 01:00:00.000 +01:00']
@@ -70,7 +71,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
 
     it('formats date correctly when sub-second precision is explicitly specified', () => {
       const timezoneSequelize = Support.createSequelizeInstance({
-        timezone: Support.getTestDialect() === 'sqlite' ? '+00:00' : 'CET'
+        timezone: ['sqlite', 'rqlite'].includes(Support.getTestDialect()) ? '+00:00' : 'CET'
       });
 
       const User = timezoneSequelize.define('user', {
@@ -90,6 +91,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           },
           bind: {
             sqlite: ['2015-01-20 01:02:03.089 +00:00'],
+            rqlite: ['2015-01-20 01:02:03.089 +00:00'],
             mariadb: ['2015-01-20 02:02:03.089'],
             mysql: ['2015-01-20 02:02:03.089'],
             default: ['2015-01-20 02:02:03.089 +01:00']
@@ -158,7 +160,8 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
           mssql: 'INSERT INTO [users] ([user_name],[pass_word]) VALUES (N\'testuser\',N\'12345\');',
           mariadb: 'INSERT INTO `users` (`user_name`,`pass_word`) VALUES (\'testuser\',\'12345\') ON DUPLICATE KEY UPDATE `user_name`=VALUES(`user_name`),`pass_word`=VALUES(`pass_word`),`updated_at`=VALUES(`updated_at`);',
           mysql: 'INSERT INTO `users` (`user_name`,`pass_word`) VALUES (\'testuser\',\'12345\') ON DUPLICATE KEY UPDATE `user_name`=VALUES(`user_name`),`pass_word`=VALUES(`pass_word`),`updated_at`=VALUES(`updated_at`);',
-          sqlite: 'INSERT INTO `users` (`user_name`,`pass_word`) VALUES (\'testuser\',\'12345\') ON CONFLICT (`user_name`) DO UPDATE SET `user_name`=EXCLUDED.`user_name`,`pass_word`=EXCLUDED.`pass_word`,`updated_at`=EXCLUDED.`updated_at`;'
+          sqlite: 'INSERT INTO `users` (`user_name`,`pass_word`) VALUES (\'testuser\',\'12345\') ON CONFLICT (`user_name`) DO UPDATE SET `user_name`=EXCLUDED.`user_name`,`pass_word`=EXCLUDED.`pass_word`,`updated_at`=EXCLUDED.`updated_at`;',
+          rqlite: 'INSERT INTO `users` (`user_name`,`pass_word`) VALUES (\'testuser\',\'12345\') ON CONFLICT (`user_name`) DO UPDATE SET `user_name`=EXCLUDED.`user_name`,`pass_word`=EXCLUDED.`pass_word`,`updated_at`=EXCLUDED.`updated_at`;'
         });
     });
   });

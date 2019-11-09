@@ -74,6 +74,7 @@ describe(Support.getTestDialectTeaser('SQL'), () => {
       ]
     }, {
       sqlite: " LIMIT ''';DELETE FROM user', 10",
+      rqlite: " LIMIT ''';DELETE FROM user', 10",
       postgres: " LIMIT 10 OFFSET ''';DELETE FROM user'",
       mariadb: " LIMIT '\\';DELETE FROM user', 10",
       mysql: " LIMIT '\\';DELETE FROM user', 10",

@@ -7,7 +7,7 @@ const Support   = require('../support'),
 
 // Notice: [] will be replaced by dialect specific tick/quote character when there is not dialect specific expectation but only a default expectation
 
-if (current.dialect.name !== 'sqlite') {
+if (!['sqlite', 'rqlite'].includes(current.dialect.name)) {
   describe(Support.getTestDialectTeaser('SQL'), () => {
     describe('removeColumn', () => {
       it('schema', () => {
